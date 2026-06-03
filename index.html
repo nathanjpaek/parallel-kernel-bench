@@ -112,6 +112,24 @@
             border-color: #111827;
         }
 
+        .btn-icon {
+            width: 1.05em;
+            height: 1.05em;
+            flex-shrink: 0;
+        }
+
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 0.88rem;
+        }
+
+        .kernel-links {
+            display: flex;
+            gap: 0.6rem;
+            justify-content: center;
+            margin-top: 0.85rem;
+        }
+
         /* Sections */
         .section {
             padding: 48px 0;
@@ -124,10 +142,206 @@
             color: #111827;
         }
 
+        .case-study-title {
+            font-size: 1.1rem;
+            margin: 1.5rem 0 0.5rem;
+            color: #111827;
+        }
+
+        .case-study-title:first-of-type {
+            margin-top: 0.75rem;
+        }
+
         .section p {
             font-size: 1.05rem;
             color: #374151;
             margin-bottom: 1rem;
+        }
+
+        .section p:last-child,
+        .section ul:last-child {
+            margin-bottom: 0;
+        }
+
+        .section ul {
+            font-size: 1.05rem;
+            color: #374151;
+            margin: 0 0 1rem 1.25rem;
+            padding-left: 0.5rem;
+        }
+
+        .section li {
+            margin-bottom: 0.85rem;
+        }
+
+        .section li:last-child {
+            margin-bottom: 0;
+        }
+
+        .section code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.92em;
+            background: #f3f4f6;
+            padding: 0.1em 0.35em;
+            border-radius: 4px;
+        }
+
+        .section a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .section a:hover {
+            text-decoration: underline;
+        }
+
+        .placeholder {
+            color: #9ca3af;
+            font-style: italic;
+            border-left: 3px solid #e5e7eb;
+            padding-left: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .hero-image {
+            display: block;
+            max-width: 420px;
+            width: 100%;
+            height: auto;
+            margin: 0 auto 1.5rem;
+            border-radius: 12px;
+        }
+
+        .figure {
+            margin: 1.75rem 0;
+            text-align: center;
+        }
+
+        .figure img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .figure figcaption {
+            font-size: 0.92rem;
+            color: #6b7280;
+            margin-top: 0.65rem;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .figure-row {
+            display: flex;
+            gap: 1.25rem;
+            margin: 1.75rem 0;
+            align-items: flex-start;
+        }
+
+        .figure-row .figure {
+            flex: 1;
+            min-width: 0;
+            margin: 0;
+        }
+
+        .figure-row .figure figcaption {
+            font-size: 0.82rem;
+        }
+
+        .table-figure {
+            margin: 1.75rem 0;
+        }
+
+        .table-figure .table-caption {
+            font-size: 0.92rem;
+            color: #374151;
+            margin-bottom: 0.75rem;
+            line-height: 1.55;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            background: #ffffff;
+        }
+
+        .results-table {
+            width: 100%;
+            min-width: 780px;
+            border-collapse: collapse;
+            font-size: 0.86rem;
+            line-height: 1.4;
+        }
+
+        .results-table th,
+        .results-table td {
+            padding: 0.45rem 0.6rem;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .results-table thead th {
+            background: #f9fafb;
+            font-weight: 600;
+            color: #111827;
+            border-bottom: 1px solid #d1d5db;
+        }
+
+        .results-table thead tr:last-child th {
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: #6b7280;
+        }
+
+        .results-table tbody tr:nth-child(even) td {
+            background: #fafafa;
+        }
+
+        .results-table tbody tr:hover td {
+            background: #f3f4f6;
+        }
+
+        .results-table td:first-child,
+        .results-table th:first-child {
+            text-align: left;
+            position: sticky;
+            left: 0;
+            z-index: 1;
+            background: #ffffff;
+            box-shadow: 2px 0 4px -2px rgba(0, 0, 0, 0.08);
+        }
+
+        .results-table th:first-child {
+            z-index: 3;
+            background: #f9fafb;
+        }
+
+        .results-table tbody tr:nth-child(even) td:first-child {
+            background: #fafafa;
+        }
+
+        .results-table tbody tr:hover td:first-child {
+            background: #f3f4f6;
+        }
+
+        .results-table tbody tr.total-row td {
+            font-weight: 600;
+            border-top: 2px solid #d1d5db;
+            border-bottom: none;
+            background: #f3f4f6;
+        }
+
+        .results-table tbody tr.total-row td:first-child {
+            background: #f3f4f6;
+        }
+
+        .results-table .col-count {
+            color: #6b7280;
+            font-variant-numeric: tabular-nums;
         }
 
         /* Citation / BibTeX */
@@ -200,6 +414,9 @@
                 width: 100%;
                 justify-content: center;
             }
+            .figure-row {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -208,6 +425,11 @@
     <header class="header">
         <div class="container">
             <h1>ParallelKernelBench</h1>
+            <img
+                class="hero-image"
+                src="images/pkb.png"
+                alt="Illustration of cartoon park benches working together, a visual pun on ParallelKernelBench"
+            >
             <p class="subtitle">Can LLMs Write Fast Multi-GPU Kernels?</p>
 
             <div class="authors">
@@ -235,6 +457,10 @@
                     <i class="fas fa-file-pdf"></i> Paper
                 </a>
                 <a href="#" class="btn" target="_blank">
+                    🤗
+                    HuggingFace
+                </a>
+                <a href="#" class="btn" target="_blank">
                     <i class="fab fa-github"></i> Code
                 </a>
             </div>
@@ -242,7 +468,7 @@
     </header>
 
     <!-- Abstract -->
-    <section class="section">
+    <!-- <section class="section">
         <div class="container">
             <h2 class="section-title">Abstract</h2>
             <p>
@@ -273,6 +499,476 @@
                 SAM3 IoU suppression (up to 1.38&times;).
             </p>
         </div>
+    </section> -->
+
+    <!-- Introduction -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Can LLMs write fast multi-GPU kernels? We built a benchmark to find out.</h2>
+            <p>
+                LLMs have gotten surprisingly good at writing GPU kernels, but almost all the
+                benchmarks measuring that progress are single-GPU.
+            </p>
+            <p>
+                <strong>ParallelKernelBench</strong> (PKB) offers a benchmark and evaluation
+                framework for multi-GPU kernel generation and includes 87 problems from real
+                codebases where the task is replacing PyTorch + NCCL with a CUDA kernel that
+                moves data directly over NVLink. We tested GPT-5.5, Gemini 3 Pro, Opus 4.7, and
+                other frontier coding models. Under a third of problems were solved correctly,
+                and fewer than a quarter of those beat the naive baseline.
+            </p>
+            <p>
+                We'll cover why they fail, what the patterns look like, and a few cases where
+                models produced kernels faster than anything publicly available, including one
+                for NVIDIA NeMo-RL's GRPO training loop, which has no prior optimized public
+                reference.
+            </p>
+        </div>
+    </section>
+
+    <!-- Why multi-GPU is different -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Why multi-GPU is different from single-GPU kernel generation</h2>
+            <p>
+                LLMs have made progress on GPU kernel generation, but that progress has mostly
+                been measured on one GPU. Production AI workloads no longer fit that frame: they
+                span multiple GPUs, and performance is increasingly shaped by communication
+                rather than just local compute and memory. That shift makes multi-GPU kernel
+                generation a different problem in three ways:
+            </p>
+            <ul>
+                <li>
+                    <strong>The design space expands combinatorially.</strong> Practitioners
+                    compose tensor, expert, data, context, and sequence parallelism to fit the
+                    hardware, and each composition creates a different communication pattern.
+                </li>
+                <li>
+                    <strong>The performance model changes.</strong> A single-GPU roofline is
+                    built around compute and memory bandwidth. In multi-GPU code, the bottleneck
+                    is often the interconnect.
+                </li>
+                <li>
+                    <strong>Multi-GPU kernel generation introduces a new design choice:</strong>
+                    how to move data between GPUs — through the copy engine, TMA, SM load/store,
+                    or NVLS — and whether to fuse that movement with compute.
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- PKB -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">ParallelKernelBench (PKB)</h2>
+            <p>
+                We built PKB to test whether models can move beyond pure <code>torch.dist</code>
+                and actually write multi-GPU kernels. Each problem starts from a standard PyTorch
+                + NCCL implementation and a description of the hardware topology. The model then
+                has to replace that reference with a CUDA kernel that communicates directly across
+                GPUs using symmetric memory.
+            </p>
+            <figure class="figure">
+                <img
+                    src="images/pkb-flow-topology.png"
+                    alt="PKB evaluation pipeline: task instruction, hardware topology, and PyTorch NCCL reference are fed to a language model, which generates a custom CUDA kernel evaluated for correctness, speedup, and communication roofline"
+                >
+                <figcaption>
+                    PKB evaluation pipeline. Each problem provides a task, hardware topology, and
+                    PyTorch + NCCL reference; the model generates a custom CUDA kernel that is
+                    evaluated for correctness, wall-clock speedup, and communication roofline.
+                </figcaption>
+            </figure>
+            <p>
+                To make sure the 87 problems cover the real space of production parallelism
+                types, we built them from a taxonomy of distributed workloads. First, we identified
+                the major ways work gets sharded — tensor, context, data, expert, sequence, and
+                FSDP/ZeRO — along with the communication patterns each one creates. Then we chose
+                87 problems to cover that space taken from the codebases of systems like
+                Megatron-LM, DeepSpeed, DeepEP, TensorRT-LLM, NeMo-RL, as well as a long tail of
+                non-LLM workloads: GNN routing, distributed FFTs, Gaussian splatting, etc. Another
+                plus is that because PKB references are written in standard PyTorch + NCCL, the
+                benchmark is not tied to one hardware generation.
+            </p>
+            <figure class="figure">
+                <img
+                    src="images/taxonomy-final.png"
+                    alt="Taxonomy for parallelizing standard transformer blocks across tensor, context, data, expert, sequence, and pipeline parallelism"
+                >
+                <figcaption>
+                    Taxonomy for parallelizing standard transformer blocks. Different sharding
+                    strategies create distinct communication patterns across normalization,
+                    attention, and MLP — illustrated here for a representative Gemma3-27B layer.
+                </figcaption>
+            </figure>
+            <figure class="figure">
+                <img
+                    src="images/coverage-pie-charts.png"
+                    alt="Pie charts showing PKB problem coverage by parallelism type and source codebase"
+                >
+                <figcaption>
+                    PKB problem coverage across parallelism types (left) and source codebases
+                    (right), spanning RL post-training, LLM training, kernel libraries, vision
+                    models, GNNs, and more.
+                </figcaption>
+            </figure>
+            <p>
+                Before evaluating models, we first checked whether the PyTorch + NCCL baselines
+                leave real headroom. A communication-aware roofline says yes: most PKB problems
+                are bottlenecked by NVLink, and the baselines run far below the hardware ceiling.
+                So the next question is simple: can models close that gap?
+            </p>
+        </div>
+    </section>
+
+    <!-- How frontier models do on PKB -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">How frontier models do on PKB</h2>
+            <ul>
+                <li>
+                    <strong>Not well.</strong> In the zero-shot setting, the best model solves 28
+                    of 87 problems, and only 22 of those solutions are faster than the PyTorch +
+                    NCCL baseline. Sampling three attempts improves the best result to 36 correct
+                    solutions and 27 faster-than-baseline solutions, but fast<sub>1</sub>@3 still
+                    tops out at 31%.
+                </li>
+
+                <figure class="table-figure">
+                    <div class="table-wrap">
+                        <table class="results-table">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2">Category</th>
+                                    <th rowspan="2">#</th>
+                                    <th colspan="2">GPT-5.5</th>
+                                    <th colspan="2">Claude Opus 4.7</th>
+                                    <th colspan="2">Gemini 3 Pro</th>
+                                    <th colspan="2">GLM-5.1</th>
+                                    <th colspan="2">DeepSeek V4 Pro</th>
+                                </tr>
+                                <tr>
+                                    <th>pass @1&rarr;3</th>
+                                    <th>fast<sub>1</sub> @1&rarr;3</th>
+                                    <th>pass @1&rarr;3</th>
+                                    <th>fast<sub>1</sub> @1&rarr;3</th>
+                                    <th>pass @1&rarr;3</th>
+                                    <th>fast<sub>1</sub> @1&rarr;3</th>
+                                    <th>pass @1&rarr;3</th>
+                                    <th>fast<sub>1</sub> @1&rarr;3</th>
+                                    <th>pass @1&rarr;3</th>
+                                    <th>fast<sub>1</sub> @1&rarr;3</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Collective Primitive</td>
+                                    <td class="col-count">8</td>
+                                    <td>3&rarr;5</td><td>3&rarr;4</td>
+                                    <td>4&rarr;5</td><td>3&rarr;4</td>
+                                    <td>6&rarr;6</td><td>2&rarr;2</td>
+                                    <td>2&rarr;3</td><td>2&rarr;3</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                </tr>
+                                <tr>
+                                    <td>Tensor Parallel</td>
+                                    <td class="col-count">17</td>
+                                    <td>2&rarr;2</td><td>1&rarr;2</td>
+                                    <td>1&rarr;3</td><td>1&rarr;3</td>
+                                    <td>3&rarr;3</td><td>1&rarr;1</td>
+                                    <td>1&rarr;1</td><td>0&rarr;0</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                </tr>
+                                <tr>
+                                    <td>Sequence Parallel</td>
+                                    <td class="col-count">2</td>
+                                    <td>1&rarr;1</td><td>1&rarr;1</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                </tr>
+                                <tr>
+                                    <td>Context Parallel</td>
+                                    <td class="col-count">12</td>
+                                    <td>7&rarr;8</td><td>5&rarr;6</td>
+                                    <td>7&rarr;7</td><td>3&rarr;4</td>
+                                    <td>7&rarr;9</td><td>5&rarr;7</td>
+                                    <td>2&rarr;2</td><td>0&rarr;0</td>
+                                    <td>2&rarr;3</td><td>0&rarr;1</td>
+                                </tr>
+                                <tr>
+                                    <td>Pipeline Parallel</td>
+                                    <td class="col-count">1</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                </tr>
+                                <tr>
+                                    <td>Data Parallel</td>
+                                    <td class="col-count">9</td>
+                                    <td>1&rarr;2</td><td>1&rarr;2</td>
+                                    <td>1&rarr;1</td><td>1&rarr;1</td>
+                                    <td>0&rarr;1</td><td>0&rarr;0</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                </tr>
+                                <tr>
+                                    <td>Expert Parallel</td>
+                                    <td class="col-count">11</td>
+                                    <td>3&rarr;3</td><td>2&rarr;3</td>
+                                    <td>2&rarr;6</td><td>0&rarr;1</td>
+                                    <td>3&rarr;4</td><td>0&rarr;1</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                </tr>
+                                <tr>
+                                    <td>FSDP / ZeRO</td>
+                                    <td class="col-count">9</td>
+                                    <td>3&rarr;4</td><td>3&rarr;4</td>
+                                    <td>3&rarr;3</td><td>3&rarr;3</td>
+                                    <td>1&rarr;1</td><td>0&rarr;1</td>
+                                    <td>1&rarr;1</td><td>0&rarr;0</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                </tr>
+                                <tr>
+                                    <td>Vocab Parallel</td>
+                                    <td class="col-count">4</td>
+                                    <td>2&rarr;2</td><td>1&rarr;1</td>
+                                    <td>1&rarr;2</td><td>1&rarr;2</td>
+                                    <td>2&rarr;2</td><td>2&rarr;2</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                </tr>
+                                <tr>
+                                    <td>Graph Parallel</td>
+                                    <td class="col-count">6</td>
+                                    <td>2&rarr;4</td><td>2&rarr;3</td>
+                                    <td>0&rarr;2</td><td>0&rarr;2</td>
+                                    <td>1&rarr;1</td><td>1&rarr;1</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                </tr>
+                                <tr>
+                                    <td>Geometric / Spatial</td>
+                                    <td class="col-count">5</td>
+                                    <td>3&rarr;3</td><td>3&rarr;3</td>
+                                    <td>1&rarr;2</td><td>0&rarr;0</td>
+                                    <td>0&rarr;1</td><td>0&rarr;1</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                </tr>
+                                <tr>
+                                    <td>Other</td>
+                                    <td class="col-count">2</td>
+                                    <td>1&rarr;2</td><td>0&rarr;1</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                    <td>1&rarr;2</td><td>1&rarr;2</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                    <td>0&rarr;0</td><td>0&rarr;0</td>
+                                </tr>
+                                <tr class="total-row">
+                                    <td>Total</td>
+                                    <td class="col-count">87</td>
+                                    <td>28&rarr;36</td><td>22&rarr;27</td>
+                                    <td>20&rarr;31</td><td>12&rarr;20</td>
+                                    <td>24&rarr;30</td><td>12&rarr;19</td>
+                                    <td>6&rarr;7</td><td>2&rarr;3</td>
+                                    <td>2&rarr;3</td><td>0&rarr;1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <figcaption class="table-caption">
+                        <strong>Single-shot LLMs struggle on PKB.</strong>
+                        pass@<em>k</em> reports correctness on the best of <em>k</em> attempts;
+                        fast<sub>1</sub>@<em>k</em> counts solutions that are both correct and
+                        outperform the PyTorch + NCCL baseline. Repeated sampling improves both metrics,
+                        but fast<sub>1</sub>@3 still peaks at just 31% (GPT-5.5), suggesting
+                        fundamental limitations beyond sampling noise.
+                    </figcaption>
+                </figure>
+
+                <li>
+                    The successes are concentrated in familiar patterns: collective primitives,
+                    tensor-parallel GEMMs, and Ulysses-style context parallelism. These are the
+                    parts of the multi-GPU stack most visible in open-source code, so models
+                    likely have stronger priors for them.
+                </li>
+                <li>
+                    The failures suggest a deeper issue than CUDA syntax. Weaker models often fail
+                    to compile, but stronger reasoning models frequently produce kernels that
+                    compile and return incorrect results. The hard part is reasoning about rank
+                    coordination, data partitioning, and collective ordering.
+                </li>
+                <li>
+                    Generated kernels also use a very narrow set of communication mechanisms.
+                    Most rely on copy engines or SM load/store instructions, while more specialized
+                    mechanisms such as TMA and NVLS are almost absent. In many cases, models do not
+                    choose the mechanism needed for peak performance. That leaves a large gap
+                    between “working” distributed kernels and genuinely optimized ones (a clear
+                    target for future work!)
+                </li>
+            </ul>
+            <div class="figure-row">
+                <figure class="figure">
+                    <img
+                        src="images/fast_p_final.png"
+                        alt="fast_p score distribution across GPT-5.5, Gemini 3 Pro, Claude Opus 4.7, GLM 5.1, and DeepSeek V4 Pro at varying speedup thresholds"
+                    >
+                    <figcaption>
+                        <em>fast<sub>p</sub></em> score distribution across frontier models. Even the best
+                        model (GPT-5.5) drops off quickly as the speedup threshold increases; at
+                        <em>p</em>&nbsp;=&nbsp;1.0, fast<sub>1</sub> tops out around 31%.
+                    </figcaption>
+                </figure>
+                <figure class="figure">
+                    <img
+                        src="images/errormodes.png"
+                        alt="Stacked bar chart of PKB failure modes by model: syntax errors, shape errors, runtime errors, output mismatch, deadlock, and correct"
+                    >
+                    <figcaption>
+                        PKB failure modes by model. Weaker models fail mostly at compile time; stronger
+                        reasoning models more often produce kernels that compile but return incorrect
+                        results (output mismatch) or deadlock.
+                    </figcaption>
+                </figure>
+            </div>
+            <p>
+                The natural next step is to give the model the same feedback loop a human kernel
+                writer would use. We wrapped Gemini 3 Pro in an agentic harness with access to the
+                repository, a terminal, compiler output, correctness tests, speed measurements, and
+                its previous attempts. Instead of producing one kernel and stopping, the model could
+                compile, run the benchmark, inspect failures, and revise.
+            </p>
+            <p>
+                This helped, but it did not solve the benchmark. Gemini 3 Pro improved from 24
+                correct solutions in the single-shot setting to 35 out of 87, with 26 kernels
+                beating the PyTorch + NCCL baseline. The gains came from fixing syntax errors,
+                shape mistakes, and simple runtime bugs. After roughly 20 refinement steps,
+                performance plateaued. Feedback helps models debug distributed kernels, but the
+                remaining failures require something harder: reasoning about rank coordination,
+                communication ordering, and when to use different GPU-to-GPU transfer mechanisms.
+            </p>
+        </div>
+    </section>
+
+    <!-- Net New Kernels -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Net New Kernels</h2>
+            <p>
+                Beyond speedups on standard collectives, single-shot generation occasionally
+                surfaces genuinely new high-performance kernels for workloads with no optimized
+                public reference. The wins are not limited to Transformers: models can do well on
+                state-space models, genomic pipelines, and multimodal RL loops — domains where
+                specialized kernels remain largely unoptimized compared to mainstream LLM stacks.
+            </p>
+            <p>
+                Below are three examples, each replacing NCCL collectives with
+                fused symmetric-memory kernels that move data directly over NVLink. Each was
+                verified for correctness over 4 H100 GPUs and 100 randomized runs; speed measurements follow
+                the benchmarking methodology in
+                <a href="https://hazyresearch.stanford.edu/blog/2026-02-19-tk-2" target="_blank" rel="noopener">ThunderKittens&nbsp;2.0</a>
+                (bitwise-identical inputs, L2-aware input groups, 500 warmup iterations, and
+                100 back-to-back profiling iterations).
+            </p>
+            <h3 class="case-study-title">NeMo vocab-parallel log-prob with top-<em>k</em>/top-<em>p</em> filtering (Gemini 3 Pro)</h3>
+            <p>
+                A core step in NVIDIA NeMo-RL's GRPO training loop: compute vocabulary-sharded
+                log-probabilities under a top-<em>k</em>/top-<em>p</em> filtered distribution.
+                The PyTorch + NCCL baseline gathers the full vocabulary across ranks before
+                filtering; the generated kernel skips those collectives entirely, using symmetric
+                memory to permute shards inline while fusing log-softmax, token extraction, and
+                target gather into a single warp-shuffle reduction.
+            </p>
+            <figure class="figure">
+                <img
+                    src="images/vocabplogtopk.png"
+                    alt="Vocab parallel log-prob top-k speedup across sequence lengths for CuBLAS plus NCCL reference versus LLM-generated CUDA kernel"
+                >
+                <figcaption>
+                    Speedup vs. PyTorch + NCCL across sequence length <em>M</em>&nbsp;&isin;&nbsp;{1024,
+                    2048, 4096, 8192, 16384}. Config: 4 ranks, <em>B</em>&nbsp;=&nbsp;1,
+                    <em>V</em>&nbsp;=&nbsp;32,000 (8,000 local vocab per rank), top-<em>k</em>&nbsp;=&nbsp;10,
+                    top-<em>p</em>&nbsp;=&nbsp;0.9.
+                </figcaption>
+                <div class="kernel-links">
+                    <a href="kernels/vocabplogtopk-reference.txt" class="btn btn-sm" target="_blank">Reference</a>
+                    <a href="kernels/vocabplogtopk-kernel.txt" class="btn btn-sm" target="_blank">Custom kernel</a>
+                </div>
+            </figure>
+            <h3 class="case-study-title">Hyena forward context parallelism (GPT-5.5)</h3>
+            <p>
+                The context-parallel forward pass for the Hyena operator, where FFT convolution
+                needs sequence-global context. The reference alternates between sequence- and
+                channel-sharded layouts via repeated <code>all_to_all</code> calls; the generated
+                kernel packs inputs into one symmetric allocation and streams remote slices over
+                NVLink, computing gating and reindexing in a unified pass. Notably, performance degrades at longer sequence lengths.
+            </p>
+            <figure class="figure">
+                <img
+                    src="images/hyenacp.png"
+                    alt="Hyena context parallelism speedup across sequence lengths for CuBLAS plus NCCL reference versus GPT-5.5-generated CUDA kernel"
+                >
+                <figcaption>
+                    Speedup vs. PyTorch + NCCL across local sequence length
+                    <em>l</em>&nbsp;&isin;&nbsp;{1024, 2048, 8192, 16384} on 4 GPUs. Correctness
+                    and speed measured over 100 trials.
+                </figcaption>
+                <div class="kernel-links">
+                    <a href="kernels/hyenacp-reference.txt" class="btn btn-sm" target="_blank">Reference</a>
+                    <a href="kernels/hyenacp-kernel.txt" class="btn btn-sm" target="_blank">Custom kernel</a>
+                </div>
+            </figure>
+            <h3 class="case-study-title">SAM 3 all-gathered mask IoU suppression (GPT-5.5)</h3>
+            <p>
+                Cross-GPU duplicate suppression for SAM 3 video segmentation: after each frame,
+                ranks compare predicted regions via intersection-over-union and zero out
+                overlapping masks. The baseline uses variable-length <code>all_gather</code>
+                collectives plus a dense matmul; the generated solution collapses this into a
+                pipeline of symmetric-memory kernels that bitpack masks and compute pairwise
+                overlap with hardware popcount.
+            </p>
+            <figure class="figure">
+                <img
+                    src="images/sam3.png"
+                    alt="SAM3 IoU suppression speedup across number of tracked objects for reference versus GPT-5.5-generated CUDA kernel"
+                >
+                <figcaption>
+                    Speedup vs. PyTorch + NCCL across tracked objects
+                    <em>N</em>&nbsp;&isin;&nbsp;{16, 32, 64, 128, 256, 512} at fixed mask resolution
+                    256&nbsp;&times;&nbsp;256, IoU threshold&nbsp;=&nbsp;0.7.
+                </figcaption>
+                <div class="kernel-links">
+                    <a href="kernels/sam3-reference.txt" class="btn btn-sm" target="_blank">Reference</a>
+                    <a href="kernels/sam3-kernel.txt" class="btn btn-sm" target="_blank">Custom kernel</a>
+                </div>
+            </figure>
+        </div>
+    </section>
+
+    <!-- Outlook -->
+    <section class="section">
+        <div class="container">
+            <p>
+                PKB is intentionally scoped to intra-node NVLink today. The natural extensions
+                are inter-node fabrics — RoCE, InfiniBand — where the device-side API landscape
+                is younger, and other accelerators and topologies like TPUs. We'd also like to
+                know whether higher-level abstractions help or hurt: PKB already accepts Triton
+                and ParallelKittens solutions, and emerging interfaces like NCCL GIN and NVSHMEM
+                are worth studying as targets.
+            </p>
+            <p>
+                The broader goal is a concrete target for the harder problem behind all of this:
+                LLM systems that can autonomously optimize and manage large-scale distributed
+                infrastructure. We're releasing PKB as an open benchmark to push on that. If you
+                want to dig in or contribute problems — especially inter-node ones — we'd love to
+                hear from you. Feel free to email <strong>npaek@together.ai</strong>!
+            </p>
+        </div>
     </section>
 
     <!-- Citation -->
@@ -297,9 +993,7 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 ParallelKernelBench</p>
-        </div>
+
     </footer>
 
     <script>
