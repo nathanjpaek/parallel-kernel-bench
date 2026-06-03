@@ -46,15 +46,41 @@
         }
 
         .authors {
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             color: #374151;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .authors sup {
+            font-size: 0.7em;
+            color: #6b7280;
         }
 
         .affiliations {
-            font-size: 0.95rem;
+            font-size: 0.92rem;
+            color: #6b7280;
+            margin-bottom: 0.4rem;
+        }
+
+        .affiliations sup {
+            font-size: 0.85em;
+        }
+
+        .notes {
+            font-size: 0.88rem;
+            color: #9ca3af;
+            margin-bottom: 0.4rem;
+        }
+
+        .emails {
+            font-size: 0.9rem;
             color: #6b7280;
             margin-bottom: 2rem;
+        }
+
+        .emails code {
+            font-family: 'Courier New', monospace;
+            color: #374151;
         }
 
         /* Buttons */
@@ -182,13 +208,26 @@
     <header class="header">
         <div class="container">
             <h1>ParallelKernelBench</h1>
-            <p class="subtitle">A benchmark for parallel kernel generation and optimization</p>
+            <p class="subtitle">Can LLMs Write Fast Multi-GPU Kernels?</p>
 
             <div class="authors">
-                Author One, Author Two, Author Three
+                Willy Chan<sup>1,2,&dagger;,*</sup>,
+                Nathan Paek<sup>1,2,&dagger;,*</sup>,
+                Simon Guo<sup>1</sup>,
+                Simran Arora<sup>2</sup>,
+                Daniel Y. Fu<sup>2</sup>
             </div>
             <div class="affiliations">
-                Affiliation A &middot; Affiliation B
+                <sup>1</sup>Department of Computer Science, Stanford University &nbsp;&middot;&nbsp;
+                <sup>2</sup>Together AI
+            </div>
+            <div class="notes">
+                <sup>&dagger;</sup>Work done during internship at Together AI &nbsp;&middot;&nbsp;
+                <sup>*</sup>Equal contribution
+            </div>
+            <div class="emails">
+                <code>{willyc, nathanjp, simonguo}@stanford.edu</code>,
+                <code>{simran, danfu}@together.ai</code>
             </div>
 
             <div class="cta-buttons">
@@ -207,9 +246,31 @@
         <div class="container">
             <h2 class="section-title">Abstract</h2>
             <p>
-                Placeholder abstract. Add a short overview of ParallelKernelBench here:
-                what problem it addresses, the approach, and the key results. This text is a
-                stand-in until the real content is ready.
+                There is growing interest in using large language models (LLMs) to write
+                high-performance GPU kernels, with recent work showing promising results on
+                single-GPU workloads. However, multi-GPU kernel generation remains unexplored,
+                despite communication emerging as a dominant bottleneck in large-scale training
+                and inference. In this paper, we study how well LLMs can write multi-GPU kernels,
+                a task compounded by three challenges: (1) the design space is combinatorially
+                large, as training and inference workloads can be parallelized across tensor,
+                expert, pipeline, data, and sequence dimensions; (2) single-GPU memory-compute
+                roofline analysis fails to capture communication bottlenecks in multi-GPU
+                execution; and (3) the many hardware paths available for communication (e.g.,
+                copy engine, TMA, SM instructions) each carry distinct tradeoffs. We introduce
+                <strong>ParallelKernelBench</strong> (PKB), a benchmark and evaluation framework
+                for multi-GPU kernel generation. To ensure that PKB achieves high coverage over
+                the space of parallel AI workloads, we create a taxonomy of distributed workloads
+                spanning different parallelism types and select N problems covering these. We
+                contribute evaluations of frontier coding models on PKB, finding that current
+                LLMs struggle: zero-shot, the best model gets only 32% of PKB correct with only
+                25% being faster than the unoverlapped baseline (PyTorch + NCCL). We also
+                contribute a communication-aware roofline to analyze correct kernels, finding
+                that over 90% of baselines achieve less than 50% of peak hardware utilization.
+                Optimized solutions to many PKB workloads yield net new useful kernels: we
+                highlight several LLM-generated net new kernels that outperform their reference
+                implementations in specific regimes, including NeMo's vocab-parallel
+                log-probability kernel (up to 1.28&times;), Hyena CP (up to 3.55&times;), and
+                SAM3 IoU suppression (up to 1.38&times;).
             </p>
         </div>
     </section>
@@ -224,11 +285,11 @@
                     <i class="fas fa-copy"></i>
                     <span id="copy-text">Copy</span>
                 </button>
-<pre id="bibtex">@misc{parallelkernelbench2026,
-  title  = {ParallelKernelBench: A Benchmark for Parallel Kernel Generation and Optimization},
-  author = {Author One and Author Two and Author Three},
+<pre id="bibtex">@misc{chan2026parallelkernelbench,
+  title  = {ParallelKernelBench: Can LLMs Write Fast Multi-GPU Kernels?},
+  author = {Willy Chan and Nathan Paek and Simon Guo and Simran Arora and Daniel Y. Fu},
   year   = {2026},
-  url    = {https://example.com}
+  url    = {https://nathanjpaek.github.io/parallel-kernel-bench/}
 }</pre>
             </div>
         </div>
