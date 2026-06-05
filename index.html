@@ -256,6 +256,12 @@
             text-align: center;
         }
 
+        .figure--compact img {
+            max-width: min(480px, 100%);
+            margin: 0 auto;
+            display: block;
+        }
+
         .figure-row {
             display: flex;
             gap: 1.25rem;
@@ -547,6 +553,11 @@
                 for <a href="https://github.com/NVIDIA-NeMo/RL/tree/main">NVIDIA NeMo-RL's GRPO training loop</a>, which has no prior optimized public
                 reference.
             </p>
+            <img
+                class="hero-image"
+                src="images/cute_gpus.png"
+                alt=""
+            >
         </div>
     </section>
 
@@ -578,6 +589,11 @@
                     or NVLS — and whether to fuse that movement with compute.
                 </li>
             </ul>
+            <img
+                class="hero-image"
+                src="images/confused_gpu.png"
+                alt=""
+            >
         </div>
     </section>
 
@@ -865,6 +881,20 @@
                     </figcaption>
                 </figure>
             </div>
+
+            <figure class="figure">
+                <img
+                    src="images/profiler_trace_cropped.png"
+                    alt="Profiler trace for GEMM plus All-Gather comparing theoretical roofline, LLM-generated CUDA kernel, and PyTorch NCCL reference"
+                >
+                <figcaption>
+                    Profiler trace for GEMM + All-Gather: a generated CUDA kernel (87.9&thinsp;&mu;s)
+                    overlaps compute and communication over NVLink, beating the PyTorch + NCCL
+                    reference (320.6&thinsp;&mu;s) while still above the theoretical roofline
+                    (4.99&thinsp;&mu;s).
+                </figcaption>
+            </figure>
+
             <p>
                 The natural next step is to give the model the same feedback loop a human kernel
                 writer would use. We wrapped Gemini 3 Pro in an <a href="https://github.com/SWE-agent/mini-swe-agent">agentic harness</a> with access to the
@@ -872,6 +902,16 @@
                 its previous attempts. Instead of producing one kernel and stopping, the model could
                 compile, run the benchmark, inspect failures, and revise.
             </p>
+            <figure class="figure figure--compact">
+                <img
+                    src="images/how_agent_works.png"
+                    alt="Agentic harness loop: language model receives prompts and examples, executes shell commands, and iterates until satisfied or out of budget"
+                >
+                <figcaption>
+                    Agentic evaluation loop: the model writes files, runs correctness tests and
+                    benchmarks, and iterates until the solution passes or the step budget is exhausted.
+                </figcaption>
+            </figure>
             <p>
                 This helped, but the practical gains are modest. Gemini 3 Pro improved from 24
                 correct solutions in the single-shot setting to 35 out of 87, with 26 kernels
@@ -888,6 +928,16 @@
     <section class="section">
         <div class="container">
             <h2 class="section-title">Net New Kernels</h2>
+            <figure class="figure">
+                <img
+                    src="images/quantitative_kernel_analysis_cropped.png"
+                    alt="Side-by-side comparison of reference PyTorch NCCL all_gather plus cuBLAS GEMM versus LLM-generated GEMM with symmetric all_gather using NVLink peer memory"
+                >
+                <figcaption>
+                    Example of replacing NCCL collectives with direct NVLink loads and stores:
+                    the reference requires extra reshaping alongside NCCL collectives; the generated kernel fuses compute operations with direct peer memory reads.
+                </figcaption>
+            </figure>
             <p>
                 Beyond speedups on standard collectives, single-shot generation occasionally
                 surfaces genuinely new high-performance kernels for workloads with no optimized
