@@ -195,6 +195,30 @@
             text-decoration: underline;
         }
 
+        sup a {
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        sup a + a {
+            margin-left: 0.1em;
+        }
+
+        .references {
+            font-size: 0.98rem;
+            color: #374151;
+            padding-left: 1.25rem;
+            line-height: 1.7;
+        }
+
+        .references li {
+            margin-bottom: 0.75rem;
+        }
+
+        .references li:last-child {
+            margin-bottom: 0;
+        }
+
         .placeholder {
             color: #9ca3af;
             font-style: italic;
@@ -506,21 +530,21 @@
         <div class="container">
             <h2 class="section-title">Can LLMs write fast multi-GPU kernels? We built a benchmark to find out.</h2>
             <p>
-                LLMs have gotten surprisingly good at writing GPU kernels, but almost all the
-                benchmarks measuring that progress are single-GPU.
+                LLMs have gotten surprisingly good at writing GPU kernels<sup><a href="#ref-standardkernel">[1]</a><a href="#ref-ai-cuda-engineer">[2]</a><a href="#ref-kevin">[3]</a></sup>, but almost all current
+                benchmarks measuring that progress are single-GPU. In production, communication is often the bottleneck: communication overhead can account for over 20% of inference latency<sup><a href="#ref-tokenweave">[4]</a></sup>, and that gap keeps widening as compute scales faster than interconnect bandwidth.
             </p>
             <p>
                 <strong>ParallelKernelBench</strong> (PKB) offers a benchmark and evaluation
                 framework for multi-GPU kernel generation and includes 87 problems from real
                 codebases where the task is replacing PyTorch + NCCL with a CUDA kernel that
-                moves data directly over NVLink. We tested GPT-5.5, Gemini 3 Pro, Opus 4.7, and
-                other frontier coding models. Under a third of problems were solved correctly,
+                moves data directly over NVLink. We tested frontier coding models such as GPT-5.5, Gemini 3 Pro, Opus 4.7, and
+                others. The evaluation revealed significant performance gaps across the board: under a third of problems were solved correctly,
                 and fewer than a quarter of those beat the naive baseline.
             </p>
             <p>
                 We'll cover why they fail, what the patterns look like, and a few cases where
                 models produced kernels faster than anything publicly available, including one
-                for NVIDIA NeMo-RL's GRPO training loop, which has no prior optimized public
+                for <a href="https://github.com/NVIDIA-NeMo/RL/tree/main">NVIDIA NeMo-RL's GRPO training loop</a>, which has no prior optimized public
                 reference.
             </p>
         </div>
@@ -532,7 +556,7 @@
             <h2 class="section-title">Why multi-GPU is different from single-GPU kernel generation</h2>
             <p>
                 LLMs have made progress on GPU kernel generation, but that progress has mostly
-                been measured on one GPU. Production AI workloads no longer fit that frame: they
+                been measured on a single GPU. Production AI workloads no longer fit that frame: they
                 span multiple GPUs, and performance is increasingly shaped by communication
                 rather than just local compute and memory. That shift makes multi-GPU kernel
                 generation a different problem in three ways:
@@ -549,7 +573,7 @@
                     is often the interconnect.
                 </li>
                 <li>
-                    <strong>Multi-GPU kernel generation introduces a new design choice:</strong>
+                    <strong>Multi-GPU kernel generation introduces a critical new design choice:</strong>
                     how to move data between GPUs — through the copy engine, TMA, SM load/store,
                     or NVLS — and whether to fuse that movement with compute.
                 </li>
@@ -560,10 +584,10 @@
     <!-- PKB -->
     <section class="section">
         <div class="container">
-            <h2 class="section-title">ParallelKernelBench (PKB)</h2>
+            <h2 class="section-title">ParallelKernelBench</h2>
             <p>
                 We built PKB to test whether models can move beyond pure <code>torch.dist</code>
-                and actually write multi-GPU kernels. Each problem starts from a standard PyTorch
+                and actually write production multi-GPU kernels. Each problem starts from a standard PyTorch
                 + NCCL implementation and a description of the hardware topology. The model then
                 has to replace that reference with a CUDA kernel that communicates directly across
                 GPUs using symmetric memory.
@@ -582,13 +606,15 @@
             <p>
                 To make sure the 87 problems cover the real space of production parallelism
                 types, we built them from a taxonomy of distributed workloads. First, we identified
-                the major ways work gets sharded — tensor, context, data, expert, sequence, and
+                the major ways models get sharded — tensor, context, data, expert, sequence, and
                 FSDP/ZeRO — along with the communication patterns each one creates. Then we chose
                 87 problems to cover that space taken from the codebases of systems like
-                Megatron-LM, DeepSpeed, DeepEP, TensorRT-LLM, NeMo-RL, as well as a long tail of
-                non-LLM workloads: GNN routing, distributed FFTs, Gaussian splatting, etc. Another
-                plus is that because PKB references are written in standard PyTorch + NCCL, the
-                benchmark is not tied to one hardware generation.
+                <a href="https://github.com/nvidia/megatron-lm" target="_blank" rel="noopener">Megatron-LM</a>,
+                <a href="https://github.com/deepspeedai/deepspeed" target="_blank" rel="noopener">DeepSpeed</a>,
+                <a href="https://github.com/deepseek-ai/DeepEP" target="_blank" rel="noopener">DeepEP</a>,
+                <a href="https://github.com/NVIDIA/TensorRT-LLM" target="_blank" rel="noopener">TensorRT-LLM</a>,
+                <a href="https://github.com/nvidia-nemo/rl" target="_blank" rel="noopener">NeMo-RL</a>, as well as a long tail of
+                non-LLM workloads: GNN routing, distributed FFTs, Gaussian splatting, etc. Another benefit is that because PKB references are written in standard PyTorch + NCCL, the benchmark is not tied to any single, particular hardware generation. Instead, it is designed to naturally evolve alongside next-generation hardware architectures.
             </p>
             <figure class="figure">
                 <img
@@ -793,7 +819,7 @@
 
                 <li>
                     The successes are concentrated in familiar patterns: collective primitives,
-                    tensor-parallel GEMMs, and Ulysses-style context parallelism. These are the
+                    tensor-parallel GEMMs, and  Ulysses-style context parallelism, which splits the sequence dimension across attention heads using all-to-all communication. These are the
                     parts of the multi-GPU stack most visible in open-source code, so models
                     likely have stronger priors for them.
                 </li>
@@ -804,10 +830,13 @@
                     coordination, data partitioning, and collective ordering.
                 </li>
                 <li>
-                    Generated kernels also use a very narrow set of communication mechanisms.
-                    Most rely on copy engines or SM load/store instructions, while more specialized
-                    mechanisms such as TMA and NVLS are almost absent. In many cases, models do not
-                    choose the mechanism needed for peak performance. That leaves a large gap
+                    Generated kernels also use a very narrow set of communication mechanisms. 
+                    Most rely on copy engines or SM load/store instructions, while more specialized 
+                    mechanisms such as TMA and NVLS are almost absent. In many cases, models do not 
+                    choose the mechanism needed for peak performance. We attribute this to a combination 
+                    of data scarcity and hardware complexity: newer primitives like TMA and NVLS require navigating intricate, 
+                    hardware-specific abstractions, such as asynchronous copy descriptors or newer NVLink topologies, where models lack strong priors.
+                    That leaves a large gap
                     between “working” distributed kernels and genuinely optimized ones (a clear
                     target for future work!)
                 </li>
@@ -838,19 +867,19 @@
             </div>
             <p>
                 The natural next step is to give the model the same feedback loop a human kernel
-                writer would use. We wrapped Gemini 3 Pro in an agentic harness with access to the
+                writer would use. We wrapped Gemini 3 Pro in an <a href="https://github.com/SWE-agent/mini-swe-agent">agentic harness</a> with access to the
                 repository, a terminal, compiler output, correctness tests, speed measurements, and
                 its previous attempts. Instead of producing one kernel and stopping, the model could
                 compile, run the benchmark, inspect failures, and revise.
             </p>
             <p>
-                This helped, but it did not solve the benchmark. Gemini 3 Pro improved from 24
+                This helped, but the practical gains are modest. Gemini 3 Pro improved from 24
                 correct solutions in the single-shot setting to 35 out of 87, with 26 kernels
                 beating the PyTorch + NCCL baseline. The gains came from fixing syntax errors,
                 shape mistakes, and simple runtime bugs. After roughly 20 refinement steps,
-                performance plateaued. Feedback helps models debug distributed kernels, but the
-                remaining failures require something harder: reasoning about rank coordination,
-                communication ordering, and when to use different GPU-to-GPU transfer mechanisms.
+                performance plateaued. Feedback helps models debug distributed kernels, but the 
+                remaining failures highlight a much bigger gap: an inability to reason about rank coordination, 
+                communication ordering, and the optimal choice of GPU-to-GPU transfer mechanisms.
             </p>
         </div>
     </section>
@@ -862,7 +891,7 @@
             <p>
                 Beyond speedups on standard collectives, single-shot generation occasionally
                 surfaces genuinely new high-performance kernels for workloads with no optimized
-                public reference. The wins are not limited to Transformers: models can do well on
+                public reference. This capability offers a preview of the broader potential for AI-driven optimization; wins are not limited to Transformers, as models can do well on
                 state-space models, genomic pipelines, and multimodal RL loops — domains where
                 specialized kernels remain largely unoptimized compared to mainstream LLM stacks.
             </p>
@@ -871,7 +900,7 @@
                 fused symmetric-memory kernels that move data directly over NVLink. Each was
                 verified for correctness over 4 H100 GPUs and 100 randomized runs; speed measurements follow
                 the benchmarking methodology in
-                <a href="https://hazyresearch.stanford.edu/blog/2026-02-19-tk-2" target="_blank" rel="noopener">ThunderKittens&nbsp;2.0</a>
+                <a href="https://hazyresearch.stanford.edu/blog/2026-02-19-tk-2" target="_blank" rel="noopener">ThunderKittens&nbsp;2.0</a><sup><a href="#ref-thunderkittens">[5]</a></sup>
                 (bitwise-identical inputs, L2-aware input groups, 500 warmup iterations, and
                 100 back-to-back profiling iterations).
             </p>
@@ -959,15 +988,54 @@
                 is younger, and other accelerators and topologies like TPUs. We'd also like to
                 know whether higher-level abstractions help or hurt: PKB already accepts Triton
                 and ParallelKittens solutions, and emerging interfaces like NCCL GIN and NVSHMEM
-                are worth studying as targets.
+                are worth studying as targets. Expanding support to these paradigms will encourage further research into how AI agents navigate diverse programming models and hardware abstractions.
             </p>
             <p>
                 The broader goal is a concrete target for the harder problem behind all of this:
                 LLM systems that can autonomously optimize and manage large-scale distributed
-                infrastructure. We're releasing PKB as an open benchmark to push on that. If you
+                infrastructure. For infrastructure custom-built for language model training and inference, 
+                achieving this autonomy could ultimately bridge the gap to AI agents capable of handling their own 
+                end-to-end research engineering.
+            </p>
+            <p>
+                We're releasing PKB as an open benchmark to push on that. If you
                 want to dig in or contribute problems — especially inter-node ones — we'd love to
                 hear from you. Feel free to email <strong>npaek@together.ai</strong>!
             </p>
+        </div>
+    </section>
+
+    <!-- References -->
+    <section class="section" id="references">
+        <div class="container">
+            <h2 class="section-title">References</h2>
+            <ol class="references">
+                <li id="ref-standardkernel">
+                    Standard Kernel.
+                    <a href="https://standardkernel.com/blog/reimagining-kernel-generation-at-the-ptx-layer-learning-from-and-outperforming-dsls/" target="_blank" rel="noopener">Reimagining Kernel Generation at the PTX Layer: An LLM System Learning from DSLs to Outperform Them</a>.
+                    Standard Kernel Blog, April 2026.
+                </li>
+                <li id="ref-ai-cuda-engineer">
+                    Robert Tjarko Lange, Qi Sun, Aaditya Prasad, Maxence Faldor, Yujin Tang, and David Ha.
+                    <a href="https://arxiv.org/abs/2509.14279" target="_blank" rel="noopener">Towards Robust Agentic CUDA Kernel Benchmarking, Verification, and Optimization</a>.
+                    arXiv:2509.14279, 2025.
+                </li>
+                <li id="ref-kevin">
+                    Carlo Baronio, Pietro Marsella, Ben Pan, Simon Guo, and Silas Alberti.
+                    <a href="https://arxiv.org/abs/2507.11948" target="_blank" rel="noopener">Kevin: Multi-Turn RL for Generating CUDA Kernels</a>.
+                    arXiv:2507.11948, 2025.
+                </li>
+                <li id="ref-tokenweave">
+                    Raja Gond, Nipun Kwatra, and Ramachandran Ramjee.
+                    <a href="https://arxiv.org/abs/2505.11329" target="_blank" rel="noopener">TokenWeave: Efficient Compute-Communication Overlap for Distributed LLM Inference</a>.
+                    arXiv:2505.11329, 2026.
+                </li>
+                <li id="ref-thunderkittens">
+                    Stuart Sul and Chris Ré.
+                    <a href="https://hazyresearch.stanford.edu/blog/2026-02-19-tk-2" target="_blank" rel="noopener">ThunderKittens 2.0: Even Faster Kernels for Your GPUs</a>.
+                    Hazy Research, February 2026.
+                </li>
+            </ol>
         </div>
     </section>
 
